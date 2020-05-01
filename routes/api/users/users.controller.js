@@ -12,13 +12,13 @@ const { ServerError } = require('../../../lib/errors');
 exports.registerWork = async (req, res, next) => {
   try {
     const { user_id: userId } = req.params;
-    const { created, thumbnail, position } = req.body;
+    const { created, thumbnail, cubes } = req.body;
 
     await Work.create({
       creator: userId,
       created,
       thumbnail,
-      position
+      cubes
     });
 
     res.status(201).json({
