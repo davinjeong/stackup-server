@@ -21,3 +21,23 @@ exports.getAllWorks = async (req, res, next) => {
     next(new ServerError());
   }
 };
+
+/* 
+
+  GET /api/works/:work_id
+
+*/
+
+exports.getWork = async (req, res, next) => {
+  try {
+    const { work_id: workId } = req.params;
+    const work = await Work.findById(workId);
+
+    res.status(200).json({
+      result: 'ok',
+      work
+    });
+  } catch {
+    next(new ServerError());
+  }
+};

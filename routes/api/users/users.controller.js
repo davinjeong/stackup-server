@@ -13,7 +13,7 @@ exports.registerWork = async (req, res, next) => {
   try {
     const { user_id: userId } = req.params;
     const { created, thumbnail, cubes } = req.body;
-
+    
     await Work.create({
       creator: userId,
       created,
