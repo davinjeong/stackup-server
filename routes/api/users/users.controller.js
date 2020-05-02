@@ -53,3 +53,23 @@ exports.modifyWork = async (req, res, next) => {
     next(new ServerError());
   }
 };
+
+/* 
+
+  DELETE /api/users/:user_id/works/:work_id
+
+*/
+
+exports.deleteWork = async (req, res, next) => {
+  try {
+    const { work_id: workId } = req.params;
+
+    await Work.findOneAndDelete(workId);
+
+    res.status(200).json({
+      result: "ok"
+    });
+  } catch {
+    next(new ServerError());
+  }
+};
