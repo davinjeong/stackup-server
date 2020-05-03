@@ -51,6 +51,26 @@ exports.getWorks = async (req, res, next) => {
 
 /* 
 
+  GET /api/users/:user_id/works/:work_id
+
+*/
+
+exports.getWork = async (req, res, next) => {
+  try {
+    const { work_id: workId } = req.params;
+    const work = await Work.findById(workId);
+
+    res.status(200).json({
+      result: 'ok',
+      work
+    });
+  } catch {
+    next(new ServerError());
+  }
+};
+
+/* 
+
   PUT /api/users/:user_id/works/:work_id
 
 */
