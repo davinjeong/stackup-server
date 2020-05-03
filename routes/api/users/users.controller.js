@@ -31,6 +31,26 @@ exports.registerWork = async (req, res, next) => {
 
 /* 
 
+  GET /api/users/:user_id/works
+
+*/
+
+exports.getWorks = async (req, res, next) => {
+  try {
+    const { user_id: userId } = req.params;
+    const works = await Work.find({ creator: userId }).populate('creator', 'name');
+
+    res.status(200).json({
+      result: 'ok',
+      works
+    });
+  } catch {
+    next(new ServerError());
+  }
+};
+
+/* 
+
   PUT /api/users/:user_id/works/:work_id
 
 */
