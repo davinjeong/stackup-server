@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { getSamples } = require('./samples.controller');
+const { getSample } = require('./samples.controller');
 
-router.get('/:shape', getSamples);
+router.get('/:shape', getSample);
 
 module.exports = router;

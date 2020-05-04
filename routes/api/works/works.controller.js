@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const Work = require('../../../models/Work');
-const { ServerError } = require('../../../lib/errors');
+const { WorkNotFoundError, ServerError } = require('../../../lib/errors');
 
 /* 
 
@@ -12,7 +12,7 @@ const { ServerError } = require('../../../lib/errors');
 exports.getAllWorks = async (req, res, next) => {
   try {
     const works = await Work.find().populate('creator', 'name');
-    
+
     res.status(200).json({
       result: 'ok',
       works
@@ -32,6 +32,8 @@ exports.getWork = async (req, res, next) => {
   try {
     const { work_id: workId } = req.params;
     const work = await Work.findById(workId);
+
+    if (!work) return next(new WorkNotFoundError());
 
     res.status(200).json({
       result: 'ok',

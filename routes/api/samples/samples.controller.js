@@ -1,16 +1,18 @@
-const { ServerError } = require('../../../lib/errors');
 const Sample = require('../../../models/Sample');
+const { SampleNotFoundError, ServerError } = require('../../../lib/errors');
 
 /* 
 
-  GET /api/samples
+  GET /api/samples/:shape
 
 */
 
-exports.getSamples = async (req, res, next) => {
+exports.getSample = async (req, res, next) => {
   try {
     const { shape } = req.params;
     const sample = await Sample.findOne({ name: shape });
+
+    if (!sample) return next(new SampleNotFoundError());
 
     res.status(200).json({
       result: 'ok',

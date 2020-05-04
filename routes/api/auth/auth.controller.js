@@ -15,7 +15,9 @@ exports.signup = async (req, res, next) => {
   try {
     const { email, name, password } = req.body;
     const user = await User.findOne({ email });
-    const userData = checkUserData(user);
+
+    if (user) return next(new SignupError());
+
     const hash = await bcrypt.hash(password, 10);
 
     await User.create({
@@ -23,10 +25,6 @@ exports.signup = async (req, res, next) => {
       name,
       password: hash
     });
-
-    function checkUserData(user) {
-      return user && next(new SignupError());
-    }
 
     res.status(201).json({
       result: 'ok'
@@ -46,25 +44,23 @@ exports.signin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    const userData = checkUserData(user);
-    const isPasswordValid = await bcrypt.compare(password, userData.password);
-    
+
+    if (!user) next(new SigninError());
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) return next(new SigninError());
 
     const token = await jwt.sign(
-      { id: user._id }, 
-      process.env.JWT_SECRET_KEY, 
-      { expiresIn: '7d'}
+      { id: user._id },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: '7d' }
     );
-
-    function checkUserData(user) {
-      return user || next(new SigninError());
-    }
 
     res.status(201).json({
       result: 'ok',
-      id: userData._id,
-      name: userData.name,
+      id: user._id,
+      name: user.name,
       token
     });
   } catch {
