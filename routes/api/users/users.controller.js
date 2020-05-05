@@ -106,7 +106,7 @@ exports.deleteWork = async (req, res, next) => {
   try {
     const { work_id: workId } = req.params;
 
-    await Work.findOneAndDelete(workId);
+    await Work.deleteOne({ _id: workId });
 
     res.status(200).json({
       result: 'ok'
