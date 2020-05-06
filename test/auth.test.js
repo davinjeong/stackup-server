@@ -1,6 +1,6 @@
 const request = require('supertest');
 const { expect } = require('chai');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const app = require('../app');
 
