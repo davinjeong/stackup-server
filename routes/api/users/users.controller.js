@@ -24,7 +24,7 @@ exports.registerWork = async (req, res, next) => {
     res.status(201).json({
       result: 'ok'
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };
@@ -44,7 +44,7 @@ exports.getUsersAllWorks = async (req, res, next) => {
       result: 'ok',
       works
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };
@@ -66,7 +66,7 @@ exports.getUsersWork = async (req, res, next) => {
       result: 'ok',
       work
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };
@@ -91,7 +91,7 @@ exports.modifyWork = async (req, res, next) => {
     res.status(201).json({
       result: 'ok'
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };
@@ -111,7 +111,7 @@ exports.deleteWork = async (req, res, next) => {
     res.status(200).json({
       result: 'ok'
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };

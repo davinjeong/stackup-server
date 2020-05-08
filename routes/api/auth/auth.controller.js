@@ -29,7 +29,7 @@ exports.signup = async (req, res, next) => {
     res.status(201).json({
       result: 'ok'
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };
@@ -63,7 +63,7 @@ exports.signin = async (req, res, next) => {
       name: user.name,
       token
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };

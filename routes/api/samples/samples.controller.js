@@ -18,7 +18,7 @@ exports.getSample = async (req, res, next) => {
       result: 'ok',
       sample
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };

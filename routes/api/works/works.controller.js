@@ -17,7 +17,7 @@ exports.getAllWorks = async (req, res, next) => {
       result: 'ok',
       works
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };
@@ -39,7 +39,7 @@ exports.getWork = async (req, res, next) => {
       result: 'ok',
       work
     });
-  } catch {
+  } catch (err) {
     next(new ServerError());
   }
 };
